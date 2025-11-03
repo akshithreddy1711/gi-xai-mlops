@@ -1,0 +1,31 @@
+# Environments
+.venv/
+env/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Data and experiment outputs
+data/
+mlruns/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Uploaded artifacts
+*.ckpt
+*.pth
+
+# Allow tracked model artifacts handled by Git LFS
+!models/

@@ -1,0 +1,57 @@
+seed: 42
+
+data:
+  root: data/kvasir
+  image_size: 224
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  val_ratio: 0.1
+  test_ratio: 0.1
+  cache_splits: true
+  splits_file: data/kvasir/splits.json
+  num_workers: 8
+  prefetch_factor: 2
+  pin_memory: true
+  persistent_workers: true
+
+model:
+  name: efficientnet_b0
+  pretrained: true
+  dropout: 0.3
+  freeze_backbone: false
+  gradcam_layer: features.7
+
+training:
+  epochs: 30
+  batch_size: 32
+  eval_batch_size: 32
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-4
+  max_grad_norm: 5.0
+  label_smoothing: 0.05
+  mixed_precision: true
+  early_stopping:
+    patience: 6
+    min_delta: 0.0005
+  lr_scheduler:
+    name: CosineAnnealingLR
+    t_max: 30
+    eta_min: 1.0e-6
+
+mlflow:
+  tracking_uri: file:./mlruns
+  experiment_name: gi-xai-classifier
+  run_name: efficientnet-b0
+
+artifacts:
+  model_dir: models
+  best_model_filename: best.pt
+  labels_filename: labels.json
+
+inference:
+  top_k: 3
+  enable_lime: true
+  lime:
+    num_samples: 1000
+    num_features: 8
+    hide_rest: false
