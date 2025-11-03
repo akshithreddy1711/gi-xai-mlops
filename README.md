@@ -1,3 +1,17 @@
+﻿---
+title: GI Disease Image Classification with XAI
+emoji: "🩺"
+colorFrom: red
+colorTo: blue
+sdk: gradio
+sdk_version: "4.44.1"
+app_file: app.py
+pinned: false
+license: mit
+python_version: "3.11"
+---
+---
+---
 # GI Disease Image Classification with XAI & MLOps
 
 ![Grad-CAM Example](https://example.com/gradcam-placeholder.png)
@@ -111,10 +125,10 @@ gi-xai-mlops/
 ```
 
 ## Makefile Cheatsheet
-- `make install` – install dependencies.
-- `make train` – train and log to MLflow.
-- `make app` – run the Gradio interface locally.
-- `make mlflow-ui` – launch the MLflow dashboard.
+- `make install` â€“ install dependencies.
+- `make train` â€“ train and log to MLflow.
+- `make app` â€“ run the Gradio interface locally.
+- `make mlflow-ui` â€“ launch the MLflow dashboard.
 
 ## Hugging Face GPU Notes
 - `.huggingface.yml` requests the free `T4-small` GPU tier and enables autolaunch.

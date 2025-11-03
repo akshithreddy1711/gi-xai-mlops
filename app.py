@@ -197,10 +197,15 @@ def predict_and_explain(image: np.ndarray, with_lime: bool) -> tuple:
             if explainer is not None:
                 lime_overlay = explainer.explain(image_uint8, top_index)
 
-        table_rows = [
-            [item["class"], f"{item['score']:.4f}"]
-            for item in top_predictions
+        predictions_lines = [
+            f"| Rank | Class | Probability |",
+            "| --- | --- | --- |",
         ]
+        for rank, item in enumerate(top_predictions, start=1):
+            predictions_lines.append(
+                f"| {rank} | {item['class']} | {item['score']:.4f} |"
+            )
+        predictions_markdown = "\n".join(predictions_lines)
 
         explanation_lines = [
             f"**Predicted:** `{primary_pred['class']}` with probability {primary_pred['score']:.1%}.",
@@ -220,7 +225,7 @@ def predict_and_explain(image: np.ndarray, with_lime: bool) -> tuple:
             )
         explanation_text = "\n\n".join(explanation_lines)
 
-        return table_rows, gradcam_overlay, lime_overlay, explanation_text
+        return predictions_markdown, gradcam_overlay, lime_overlay, explanation_text
     except Exception as exc:  # noqa: BLE001
         raise gr.Error(f"Inference failed: {exc}") from exc
 
@@ -253,14 +258,7 @@ Optionally enable LIME for a complementary superpixel-based explanation.
             )
             run_button = gr.Button("Run Inference", variant="primary")
         with gr.Column(scale=1):
-            predictions_table = gr.Dataframe(
-                headers=["Class", "Probability"],
-                datatype=["str", "str"],
-                row_count=TOP_K,
-                col_count=2,
-                interactive=False,
-                label="Top Predictions",
-            )
+            predictions_table = gr.JSON(label="Top Predictions")
             gradcam_output = gr.Image(label="Grad-CAM Overlay", height=256)
             lime_output = gr.Image(
                 label="LIME Overlay",
