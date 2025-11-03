@@ -2,6 +2,6 @@ sdk: gradio
 app_file: app.py
 python_version: "3.11"
 resources:
-  hardware: "cpu-basic"
+  hardware: "zero-gpu"
   replicas: 1
 autolaunch: true
