@@ -198,7 +198,7 @@ def predict_and_explain(image: np.ndarray, with_lime: bool) -> tuple:
                 lime_overlay = explainer.explain(image_uint8, top_index)
 
         predictions_lines = [
-            f"| Rank | Class | Probability |",
+            "| Rank | Class | Probability |",
             "| --- | --- | --- |",
         ]
         for rank, item in enumerate(top_predictions, start=1):
@@ -258,7 +258,7 @@ Optionally enable LIME for a complementary superpixel-based explanation.
             )
             run_button = gr.Button("Run Inference", variant="primary")
         with gr.Column(scale=1):
-            predictions_table = gr.JSON(label="Top Predictions")
+            predictions_table = gr.Markdown(label="Top Predictions")
             gradcam_output = gr.Image(label="Grad-CAM Overlay", height=256)
             lime_output = gr.Image(
                 label="LIME Overlay",
